@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:,">  <!-- ファビコン画像を空白で表示 -->
+  <title>じゃんけんアプリ</title>
+</head>
+<body>
+<!-- ここから記入 -->
+
+<div class="mx-auto h-auto bg-gray-300 p-2 
+            md:max-w-3xl 
+            max-w-md
+            ">
+  <div class="text-3xl text-center pb-3">
+    じゃんけんアプリ
+  </div>
+
+  <!-- モーダルウィンドウ用 -->
+  <div class="modal-container">
+    <div class="modal-body">
+      <div class="modal-content">
+        <p class="comment">じゃんけんアプリ</p>
+        <p class="modal-close">勝負</p> <br>
+        <p class="clear">戦績クリア</p>
+        <div id="performanceresult" class=""> 
+          <div class="text-[18px] pb-2">＜戦績＞</div> <!-- 戦績を表示 -->
+          <div class="grid grid-rows-2  grid-cols-[20%,14%,20%,13%,20%,13%]">
+            <p>　試合数：</p>
+            <p id="game0"></p>
+            <p>　勝利数：</p>
+            <p id="game1"></p>
+            <p>　敗北数：</p>
+            <p id="game2"></p>
+            <p></p>
+            <p></p>
+            <p>　　勝率：</p>
+            <p id="game1p"></p>
+            <p>　　敗率：</p>
+            <p id="game2p"></p>
+          </div>
+          <br>
+          <div class="grid grid-rows-2  grid-cols-[18%,10%,14%,10%,14%,10%,14%,10%]">
+            <p>勝負数：</p>
+            <p id="vs0"></p>
+            <p>〇：</p>
+            <p id="vs1"></p>
+            <p>✕：</p>
+            <p id="vs2"></p>
+            <p>△：</p>
+            <p id="vs3"></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p id="vs1p"></p>
+            <p></p>
+            <p id="vs2p"></p>
+            <p></p>
+            <p id="vs3p"></p>
+          </div>
+          <br>
+          <div class="grid grid-rows-3  grid-cols-[18%,16%,10%,12%,10%,12%,10%,12%]">
+            <p>グーの戦績</p>
+            <p id="gu0"></p>
+            <p>〇：</p>
+            <p id="gu1p"></p>
+            <p>✕：</p>
+            <p id="gu2p"></p>
+            <p>△：</p>
+            <p id="gu3p"></p>
+            <p>チョキの戦績</p>
+            <p id="cho0"></p>
+            <p>〇：</p>
+            <p id="cho1p"></p>
+            <p>✕：</p>
+            <p id="cho2p"></p>
+            <p>△：</p>
+            <p id="cho3p"></p>
+            <p>パーの戦績</p>
+            <p id="pa0"></p>
+            <p>〇：</p>
+            <p id="pa1p"></p>
+            <p>✕：</p>
+            <p id="pa2p"></p>
+            <p>△：</p>
+            <p id="pa3p"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 残り戦闘時間 -->
+  <div class="flex justify-between mb-1">
+    <div class="w-[70px] text-center text-sm">残り時間</div>
+    <div id="time-frame">
+      <div id="time-bar"></div>
+      <div id="time-mark"></div>
+    </div>
+  </div>
+
+  <!-- ライフゲージ -->
+  <div class="flex justify-between mb-1">
+    <div class="w-[70px] text-center text-sm">敵ライフ</div>
+    <div id="life-frame">
+      <div id="life-bar"></div>
+      <div id="life-mark"></div>
+    </div>
+    <div id="btns-wrap">
+        <div id="increase-btn" onclick="alterLife( 10 )">+</div>
+        <div id="decrease-btn" onclick="alterLife( -10 )">-</div>
+    </div>
+  </div>
+
+  <div class="flex justify-center w-full bg-white">
+
+    <div class="grid grid-rows place-content-around gap-y-1 py-1">
+      <div class="grid grid-rows-3-[140px-30px-140px] grid-cols-3 grid-flow-col gap-y-1">
+          <div class="grid justify-end place-items-center m-2 p-2">相手</div>
+          <div>
+            <div id="result" class="ml-12 items-center w-[60px] p-2 bg-gray-100 text-center text-xl ">判定</div>
+          </div>
+          <div class="grid justify-end place-items-center m-2 p-2">自分</div>
+        <div class="jrow-span-1 ustify-self-center w-[110px] h-[140px] bg-red-100 border border-solid border-gray-400">
+            <img id="cp" class="object-contain h-[110px]">
+          <div id="cp_text" class="flex justify-center "></div>
+        </div>
+        <div class="flex justify-self-center h-[40px] items-center">VS</div>
+        <div class="jrow-span-1 ustify-self-center w-[110px] h-[140px] bg-yellow-100 
+                    border border-solid border-gray-400 text-center">
+          <img id="my" class="object-contain h-[110px]">
+          <div id="my_text" class="flex justify-center "></div>
+        </div>
+        <div  class="grid row-span-3 justify-center items-end">
+          <div class="text-[32px] text-[#EF4444]">
+            <p id="heart3">❤</p>
+            <p id="heart2">❤</p>
+            <p id="heart1">❤</p>
+          </div>
+        </div>
+      </div>
+      <div id="ggg" class="flex justify-center items-start h-[95px] bg-gray-100 text-center text-xs">
+        <div id="gu" class="cursor-pointer mx-3 bg-blue-100 border border-solid border-gray-400 ">
+          <img src="img/じゃんけん_グー.png" alt="" class="object-contain h-[60px] flex justify-center w-[70px]">
+          グー<br/>（A / ←） 
+        </div>
+        <div id="cho" class="cursor-pointer mx-3 bg-blue-100 border border-solid border-gray-400">
+          <img src="img/じゃんけん_チョキ.png" alt="" class="object-contain h-[60px] flex justify-center w-[70px]">
+          チョキ<br/>（S / ↓） 
+        </div>
+        <div id="pa" class="cursor-pointer mx-3 bg-blue-100 border border-solid border-gray-400">
+          <img src="img/じゃんけん_パー.png" alt="" class="object-contain h-[60px] flex justify-center w-[70px]">
+          パー<br/>（D / →） 
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+
+  <!-- jQueryのjsのコードを先に読み込む！ -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!--jsとの紐づけは、bodyの直前にjsを入れる傾向がある -->
+  <script src="js/231110.js"></script>
+</body>
+</html>
